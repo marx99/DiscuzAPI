@@ -1,3 +1,9 @@
+2017-01-01
+
+增加了对python3的支持（原作者为python2版本）
+
+-----------------------------------------
+
 import DiscuzAPI
 
 robot = DiscuzAPI(sys.argv[1], sys.argv[2], sys.argv[3])
