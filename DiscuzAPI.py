@@ -6,7 +6,7 @@ base by Conanca
 image upload by N3il
 """
 
-import urllib2
+import urllib.request as urllib2
 import urllib
 import cookielib
 import random
@@ -15,8 +15,8 @@ import re
 import time
 import sys
 import httplib
-import mimetools
-import mimetypes
+#import mimetools
+#import mimetypes
 
 httplib.HTTPConnection.debuglevel = 1
 
@@ -45,11 +45,11 @@ class DiscuzAPI:
 		content = urllib2.urlopen(req).read()
 		if self.userName.encode('gbk') in content:
 			self.isLogon = True
-			print 'logon success!'
+			print ('logon success!')
 			self.initFormhashXq()
 			return 1
 		else:
-			print 'logon faild!'
+			print ('logon faild!')
 			return 0
  
 	def initFormhashXq(self):
@@ -58,18 +58,18 @@ class DiscuzAPI:
 		rows = re.findall(r'<input type=\"hidden\" name=\"formhash\" value=\"(.*?)\" />', content)
 		if len(rows)!=0:
 			self.formhash = rows[0]
-			print 'formhash is: ' + self.formhash
+			print ('formhash is: ' + self.formhash)
 		else:
-			print 'none formhash!'
+			print ('none formhash!')
 		rows = re.findall(r'<input id=.* type=\"radio\" name=\"qdxq\" value=\"(.*?)\" style=\"display:none\">', content)
 		if len(rows)!=0:
 			self.xq = rows[0]
-			print 'xq is: ' + self.xq
+			print ('xq is: ' + self.xq)
 		elif u'已经签到' in content:
 			self.isSign = True
-			print 'signed before!'
+			print ('signed before!')
 		else:
-			print 'none xq!'
+			print ('none xq!')
  
 	def reply(self, tid, subject = u'',msg = u'支持~~~顶一下下~~嘻嘻'):
 		''' 回帖 '''
@@ -79,9 +79,9 @@ class DiscuzAPI:
 		content = urllib2.urlopen(req).read().decode('gbk')
 		#print content
 		if u'发布成功' in content:
-			print 'reply success!'
+			print ('reply success!')
 		else:
-			print 'reply faild!'
+			print ('reply faild!')
  
 	def publish(self, fid, typeid, subject = u'发个帖子测试一下下，嘻嘻~~~',msg = u'发个帖子测试一下下，嘻嘻~~~', imgId = ""):
 		''' 发帖 '''
@@ -114,10 +114,10 @@ class DiscuzAPI:
 		content = urllib2.urlopen(req).read().decode('gbk')
 		#print content
 		if u"您的主题已发布" in content:
-			print 'publish success!'
+			print ('publish success!')
 			return 1
 		else:
-			print 'publish faild!'
+			print ('publish faild!')
 			return 0
  
 	def sign(self,msg = u'哈哈，我来签到了！'):
@@ -132,9 +132,9 @@ class DiscuzAPI:
 			#print content
 			if u'签到成功' in content:
 				self.isSign = True
-				print 'sign success!'
+				print ('sign success!')
 				return
-		print 'sign faild!'
+		print ('sign faild!')
  
 	def speak(self,msg = u'hah,哈哈，测试一下！'):
 		''' 发表心情 '''
@@ -144,9 +144,9 @@ class DiscuzAPI:
 		content = urllib2.urlopen(req).read().encode('gbk')
 		#print content
 		if u'操作成功' in content:
-			print 'speak success!'
+			print ('speak success!')
 		else:
-			print 'speak faild!'
+			print ('speak faild!')
 
 	def uploadImage(self, imageData, fid=21):
 		imageId = None
@@ -206,5 +206,5 @@ if __name__ == '__main__':
 	#robot.publish(21,36)
 	#robot.reply(10)
 	imageData = open('test.jpg', 'rb').read()
-	print robot.uploadImage( imageData )
+	print (robot.uploadImage( imageData ))
 
